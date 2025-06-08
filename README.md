@@ -1,0 +1,1 @@
+Forked the original Spotify Terraform provider and changed all instances of http://localhost:27228/spotify_callback to http://127.0.0.1:27228/spotify_callback since Spotify for Developers no longer allows localhost redirect URIs, resulting in a custom docker image
