@@ -1,4 +1,4 @@
-resource "spotify_playlist" "tf project" {
+resource "spotify_playlist" "tf_project" {
   name = "tf project"
-  tracks = []
+  tracks = ["4OROzZUy6gOWN4UGQVaZMF"]
 }
