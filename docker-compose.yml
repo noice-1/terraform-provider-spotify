@@ -1,38 +1,21 @@
-version: "3.8"
 
 services:
-  spotify_proxy:
-    build:
-      context: ./spotify_auth_proxy
-    image: spotify_auth_proxy_custom
+  spotify_auth_proxy:
+    build: ./terraform-provider-spotify/spotify_auth_proxy
     ports:
       - "27228:27228"
     env_file:
       - .env
-    restart: unless-stopped
 
-  spotify_exporter:
+  exporter:
     build:
       context: ./exporter
-    image: spotify_exporter_custom
     ports:
-      - "9100:9100"
-    env_file:
-      - .env
-      # exporter.env if separate
-    depends_on:
-      - spotify_proxy
+      - "8000:8000"
 
   prometheus:
-    image: prom/prometheus:latest
+    image: prom/prometheus
     ports:
       - "9090:9090"
     volumes:
-      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
-
-  grafana:
-    image: grafana/grafana:latest
-    ports:
-      - "3000:3000"
-    depends_on:
-      - prometheus
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml

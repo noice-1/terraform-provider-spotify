@@ -2,6 +2,6 @@ global:
   scrape_interval: 15s  # Prometheus will pull metrics every 15 seconds
 
 scrape_configs:
-  - job_name: 'spotify_auth_proxy'
+  - job_name: 'python_exporter'
     static_configs:
-      - targets: ['spotify_auth_proxy:27228']  # Use container name as host
+      - targets: ['exporter:8000']
