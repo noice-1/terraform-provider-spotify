@@ -15,6 +15,7 @@ spotify_auth_requests = Counter("spotify_auth_requests_total", "Total Spotify Au
 cpu_usage = Gauge("app_cpu_usage", "CPU usage of the app")
 playlist_track_count = Gauge("playlist_track_count", "Number of tracks in the playlist")
 playlist_total_duration = Gauge("playlist_total_duration_seconds", "Total duration of playlist in seconds")
+track_popularity_metric = Gauge("track_popularity", "Spotify track popularity score (0–100)", ["track", "artist"])
 
 # Logging setup
 logging.basicConfig(level=logging.INFO)
@@ -82,6 +83,15 @@ def update_playlist_metrics():
     playlist_total_duration.set(total_duration / 1000)
 
     logging.info(f"Updated metrics: {len(tracks)} tracks, {total_duration / 1000:.2f} seconds")
+
+    for item in tracks:
+            track = item.get("track", {})
+            track_name = track.get("name", "")
+            popularity = track.get("popularity", 0)
+            artists = track.get("artists", [])
+            artist_name = artists[0].get("name", "") if artists else ""
+            track_popularity_metric.labels(track=track_name, artist=artist_name).set(popularity)
+            logging.info(f"Track: '{track_name}' by '{artist_name}' — Popularity: {popularity}")
 
 if __name__ == "__main__":
     start_http_server(5000)
