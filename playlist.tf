@@ -20,6 +20,5 @@ resource "spotify_playlist" "tf_project" {
             data.spotify_search_track.thewanted.tracks[1].id,
             "47FjToieQbxqNnuiRRQtym",
             "2IvNxLl01CTAfCOA103Tgx",
-            "2WfaOiMkCvy7F5fcp2zZ8L",
-            "1EjxJHY9A6LMOlvyZdwDly"]
+            "2WfaOiMkCvy7F5fcp2zZ8L"]
 }
